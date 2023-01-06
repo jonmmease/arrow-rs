@@ -814,15 +814,17 @@ where
 /// Where a list array has indices `[0,2,5,10]`, taking indices of `[2,0]` returns
 /// an array of the indices `[5..10, 0..2]` and offsets `[0,5,7]` (5 elements and 2
 /// elements)
+///
+/// Returns tuple of (values, offsets, null buffer)
 #[allow(clippy::type_complexity)]
 fn take_value_indices_from_list<IndexType, OffsetType>(
     list: &GenericListArray<OffsetType::Native>,
     indices: &PrimitiveArray<IndexType>,
 ) -> Result<
     (
-        PrimitiveArray<OffsetType>,
-        Vec<OffsetType::Native>,
-        MutableBuffer,
+        PrimitiveArray<OffsetType>, // Inner list values
+        Vec<OffsetType::Native>,    // Offsets
+        MutableBuffer,              // Null buffer
     ),
     ArrowError,
 >
